@@ -1,4 +1,3 @@
-import json
 import cek
 
 def main(args):
@@ -20,7 +19,18 @@ def main(args):
             response = clova.response([bye_message])
             return response
         elif args["request"]["type"] == "IntentRequest":
-            rep_message = "かしこまりました。他にご注文はありますか？"
+            if "Drink" in args["request"]["intent"]["slots"] and "number" in args["request"]["intent"]["slots"]:
+                value = args["request"]["intent"]["slots"]["number"]["value"]
+                menu = args["request"]["intent"]["slots"]["Drink"]["value"]
+                rep_message = "{}を{}つですね。他にご注文はありますか？".format(menu, value)
+            elif "Food" in args["request"]["intent"]["slots"] and "number" in args["request"]["intent"]["slots"]:
+                value = args["request"]["intent"]["slots"]["number"]["value"]
+                menu = args["request"]["intent"]["slots"]["Food"]["value"]
+                rep_message = "{}を{}つですね。他にご注文はありますか？".format(menu, value)
+            elif args["request"]["intent"]["name"] == "Clova.NoIntent":
+                rep_message = "ありがとうございました。またのご利用をお待ちしております。"
+            else:
+                rep_message = "かしこまりました。他にご注文はありますか？"
             reply_speak = cek.Message(message=rep_message, language="ja")
             response = clova.response([reply_speak])
             return response
