@@ -1,0 +1,49 @@
+{
+    "context": {
+        "System": {
+            "application": {
+                "applicationId": "com.heroku.kmiura.app"
+            },
+            "device": {
+                "deviceId": "9a7ed0e4b923c09dd4b3cd4c0345a7fb9686e70ad2590ff62935cb868e24f672",
+                "display": {
+                    "contentLayer": {
+                        "height": 0,
+                        "width": 0
+                    },
+                    "size": "none"
+                }
+            },
+            "user": {
+                "userId": "U580ffcecfcb3f07673b2b1b19a4d0f60"
+            }
+        }
+    },
+    "request": {
+        "event": {
+            "name": "",
+            "namespace": "",
+            "payload": "null"
+        },
+        "extensionId": "com.heroku.kmiura.app",
+        "intent": {
+            "intent": "",
+            "name": "",
+            "slots": "null"
+        },
+        "locale": "ja-JP",
+        "reason": "USER_INITIATED",
+        "requestId": "7c96ad10-bcec-4114-aac7-a6d0e845f8b0",
+        "timestamp": "2019-12-06T16:21:04Z",
+        "type": "SessionEndedRequest"
+    },
+    "session": {
+        "new": "false",
+        "sessionAttributes": {},
+        "sessionId": "ec02db48-a5bf-4fb2-b261-91cba939ddd5",
+        "user": {
+            "userId": "U580ffcecfcb3f07673b2b1b19a4d0f60"
+        }
+    },
+    "version": "1.0"
+}

@@ -1,0 +1,74 @@
+{
+    "__ow_headers": {
+        "accept-encoding": "gzip",
+        "cdn-loop": "cloudflare",
+        "cf-connecting-ip": "147.92.149.72",
+        "cf-ipcountry": "JP",
+        "cf-ray": "54071600cce1ef86-NRT",
+        "cf-visitor": "{\"scheme\":\"https\"}",
+        "content-type": "application/json",
+        "cookie": "__cfduid=dd6d7fe43def3a3ea1514eadc77b7b46c1575560067",
+        "host": "us-south.functions.cloud.ibm.com",
+        "signaturecek": "gy8DjaNQ+u4IqW9jm16L46nFcWjHlmEWtUF2+JXb6OQoTqoYDUo21rVgVoUR7JDsFb+g1dvSpLGNcKRw3nZ06lOpXUo45V3zTfQlErBgnzOGBakXi5J+NGTu2AUMQnt2KPsPLJKQUvz5GwmIgn6miGcFDcjrsvjEeiF8Mj30E0A4brfupDkLSdoKsxmF6QjKePJYTkFuVJAJRS7YJnK4CKHWHLHxEVGS3nq2sqym9uHM6ItL0xWc9TAuH90TqpVneNUOUQs6dPcxOjzVgkMyJVmxw6qTWBkFfl3f9Gw0pfaGmNm51cYkwosmStxVo+A4hKFSTjdPPTv3dRbBnCc04A==",
+        "user-agent": "Apache-HttpClient/4.5.6 (Java/1.8.0_202)",
+        "x-forwarded-for": "147.92.149.72, 162.158.118.66",
+        "x-forwarded-host": "us-south.functions.cloud.ibm.com",
+        "x-forwarded-port": "443",
+        "x-forwarded-proto": "https",
+        "x-global-k8fdic-transaction-id": "438ecdb8248a1e375d8d8e68ea302971",
+        "x-real-ip": "162.158.118.66",
+        "x-request-id": "438ecdb8248a1e375d8d8e68ea302971"
+    },
+    "__ow_method": "post",
+    "__ow_path": "",
+    "context": {
+        "System": {
+            "application": {
+                "applicationId": "net.clova.cafe"
+            },
+            "device": {
+                "deviceId": "856f5b27-89aa-4b55-abed-7a8c9d95ac35",
+                "display": {
+                    "contentLayer": {
+                        "height": 360,
+                        "width": 640
+                    },
+                    "dpi": 96,
+                    "orientation": "landscape",
+                    "size": "l100"
+                }
+            },
+            "user": {
+                "accessToken": "e399d517-a681-4029-9ac9-d8d2ce7709ab",
+                "userId": "G4HVqZJJTriLKJhGtb3O2Q"
+            }
+        }
+    },
+    "request": {
+        "intent": {
+            "name": "Order",
+            "slots": {
+                "Food": {
+                    "name": "Food",
+                    "value": "ケーキ"
+                },
+                "number": {
+                    "name": "number",
+                    "unit": "つ",
+                    "value": "2"
+                }
+            }
+        },
+        "type": "IntentRequest"
+    },
+    "session": {
+        "new": true,
+        "sessionAttributes": {},
+        "sessionId": "feaf1b8c-c5a1-4d9a-bf6d-3c15a5aa4420",
+        "user": {
+            "accessToken": "e399d517-a681-4029-9ac9-d8d2ce7709ab",
+            "userId": "G4HVqZJJTriLKJhGtb3O2Q"
+        }
+    },
+    "version": "1.0"
+}
