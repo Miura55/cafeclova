@@ -18,8 +18,15 @@ def main(args):
             bye_message = cek.Message(message=thanks_text, language="ja")
             response = clova.response([bye_message])
             return response
+        # intentのリクエストが来たときの判定
         elif args["request"]["type"] == "IntentRequest":
-            if "Drink" in args["request"]["intent"]["slots"] and "number" in args["request"]["intent"]["slots"]:
+            if args["request"]["intent"]["name"] == "Clova.NoIntent":
+                rep_message = "ありがとうございました。またのご利用をお待ちしております。"
+                reply_speak = cek.Message(message=rep_message, language="ja")
+                response = clova.response([reply_speak], end_session=True)
+                return response
+            # カスタムインテントの判定
+            elif "Drink" in args["request"]["intent"]["slots"] and "number" in args["request"]["intent"]["slots"]:
                 value = args["request"]["intent"]["slots"]["number"]["value"]
                 menu = args["request"]["intent"]["slots"]["Drink"]["value"]
                 rep_message = "{}を{}つですね。他にご注文はありますか？".format(menu, value)
@@ -27,13 +34,12 @@ def main(args):
                 value = args["request"]["intent"]["slots"]["number"]["value"]
                 menu = args["request"]["intent"]["slots"]["Food"]["value"]
                 rep_message = "{}を{}つですね。他にご注文はありますか？".format(menu, value)
-            elif args["request"]["intent"]["name"] == "Clova.NoIntent":
-                rep_message = "ありがとうございました。またのご利用をお待ちしております。"
             else:
                 rep_message = "かしこまりました。他にご注文はありますか？"
-            reply_speak = cek.Message(message=rep_message, language="ja")
-            response = clova.response([reply_speak])
-            return response
     except Exception as e:
         print(e)
         return {"status":500}
+    else:
+        reply_speak = cek.Message(message=rep_message, language="ja")
+        response = clova.response([reply_speak])
+        return response
