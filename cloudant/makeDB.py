@@ -1,15 +1,19 @@
 import requests
+from dotenv import load_dotenv
+import os
 
 params = (
     ('blocking', 'true'),
 )
 
-body = {"db_name":"my_db"}
+body = {
+    "userId":"431",
+    "menu":"マカロン",
+    "value":4
+}
 
 response = requests.post(
-            args["URL"], 
-            params=params, 
-            auth=(args["API_KEY"], 'UVMn2vlj8HqCmPjg3QgCgLOIygYIL7hkfUBIEjoDGXKR100rdUyUsMRPRkeSUDjN'),
+            os.environ("URL")+"/order",
             json = body
         )
 print(response.text)

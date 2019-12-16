@@ -7,21 +7,6 @@ def main(args):
         application_id="net.clova.cafe",
         default_language="ja",
         debug_mode=True)
-    
-    params = (
-        ('blocking', 'true'),
-    )
-
-    body = {"db_name":args["session"]["user"]["userId"]}
-
-    response = requests.post(
-            args["URL"], 
-            params=params, 
-            auth=(args["API_KEY"], 'UVMn2vlj8HqCmPjg3QgCgLOIygYIL7hkfUBIEjoDGXKR100rdUyUsMRPRkeSUDjN'),
-            json = body
-        )
-    print(response.status_code)
-
 
     try:
         if args["request"]["type"] == "LaunchRequest":
@@ -45,10 +30,14 @@ def main(args):
             elif "Drink" in args["request"]["intent"]["slots"] and "number" in args["request"]["intent"]["slots"]:
                 value = args["request"]["intent"]["slots"]["number"]["value"]
                 menu = args["request"]["intent"]["slots"]["Drink"]["value"]
+                # データ入力するAPIに登録
+                call_db(args, menu, value)
                 rep_message = "{}を{}つですね。他にご注文はありますか？".format(menu, value)
             elif "Food" in args["request"]["intent"]["slots"] and "number" in args["request"]["intent"]["slots"]:
                 value = args["request"]["intent"]["slots"]["number"]["value"]
                 menu = args["request"]["intent"]["slots"]["Food"]["value"]
+                # Kintoneにデータを送信
+                call_db(args, menu, value)
                 rep_message = "{}を{}つですね。他にご注文はありますか？".format(menu, value)
             else:
                 rep_message = "かしこまりました。他にご注文はありますか？"
@@ -59,3 +48,17 @@ def main(args):
         reply_speak = cek.Message(message=rep_message, language="ja")
         response = clova.response([reply_speak])
         return response
+
+def call_db(args, menu, value):
+    body = {
+        "userId":args["session"]["user"]["userId"],
+        "menu":menu,
+        "value":value
+    }
+
+    response = requests.post(
+            args["URL"] + "/order",
+            json = body
+        )
+
+    return response.text
