@@ -1,4 +1,5 @@
 import cek
+import requests
 
 def main(args):
     print(args)
@@ -6,6 +7,21 @@ def main(args):
         application_id="net.clova.cafe",
         default_language="ja",
         debug_mode=True)
+    
+    params = (
+        ('blocking', 'true'),
+    )
+
+    body = {"db_name":args["session"]["user"]["userId"]}
+
+    response = requests.post(
+            args["URL"], 
+            params=params, 
+            auth=(args["API_KEY"], 'UVMn2vlj8HqCmPjg3QgCgLOIygYIL7hkfUBIEjoDGXKR100rdUyUsMRPRkeSUDjN'),
+            json = body
+        )
+    print(response.status_code)
+
 
     try:
         if args["request"]["type"] == "LaunchRequest":

@@ -1,21 +1,15 @@
-from cloudant.client import Cloudant
-from cloudant.error import CloudantException
-from cloudant.result import Result, ResultByKey
-from cloudant.query import Query
-from cloudant.index import Index
-from dotenv import load_dotenv
-import os, time
+import requests
 
-load_dotenv()
+params = (
+    ('blocking', 'true'),
+)
 
-client = Cloudant.iam(os.environ["USER_NAME"], os.environ["API_KEY"])
-client.connect()
+body = {"db_name":"my_db"}
 
-db_name = "order_list"
-my_database = client.create_database(db_name)
-while True:
-    time.sleep(1)
-    if my_database.exists():
-        print(f"'{db_name}' successfully created.")
-        break
-
+response = requests.post(
+            args["URL"], 
+            params=params, 
+            auth=(args["API_KEY"], 'UVMn2vlj8HqCmPjg3QgCgLOIygYIL7hkfUBIEjoDGXKR100rdUyUsMRPRkeSUDjN'),
+            json = body
+        )
+print(response.text)
