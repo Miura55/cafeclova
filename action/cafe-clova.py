@@ -7,6 +7,7 @@ def main(args):
         application_id="net.clova.cafe",
         default_language="ja",
         debug_mode=True)
+    userId = args["session"]["user"]["userId"]
 
     try:
         if args["request"]["type"] == "LaunchRequest":
@@ -15,6 +16,9 @@ def main(args):
             response = clova.response([welcome_message])
             return response
         elif args["request"]["type"] == "SessionEndedRequest" :
+            # 注文の確認
+            confirm_order = requests.get(args["URL"]+"/confilm?userId={}".format(args["session"]["user"]["userId"]))
+            print(confirm_order)
             thanks_text = "ありがとうございました。またのご利用をお待ちしております。"
             bye_message = cek.Message(message=thanks_text, language="ja")
             response = clova.response([bye_message])
@@ -36,7 +40,7 @@ def main(args):
             elif "Food" in args["request"]["intent"]["slots"] and "number" in args["request"]["intent"]["slots"]:
                 value = args["request"]["intent"]["slots"]["number"]["value"]
                 menu = args["request"]["intent"]["slots"]["Food"]["value"]
-                # Kintoneにデータを送信
+                # データ入力するAPIに登録
                 call_db(args, menu, value)
                 rep_message = "{}を{}つですね。他にご注文はありますか？".format(menu, value)
             else:

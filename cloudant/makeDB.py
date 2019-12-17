@@ -3,15 +3,7 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-
-body = {
-    "userId":"431",
-    "menu":"マカロン",
-    "value":5
-}
-
-response = requests.post(
-            os.environ["URL"]+"/order",
-            json = body
+response = requests.get(
+            os.environ["URL"]+"/confilm?userId={}".format(os.environ["ID"])
         )
-print(response.text)
+print(response.json())
