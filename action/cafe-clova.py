@@ -1,6 +1,6 @@
 import cek
 from linebot import LineBotApi
-from linebot.models import TextSendMessage
+from linebot.models import TextSendMessage, FlexSendMessage, BubbleContainer
 from linebot.exceptions import LineBotApiError
 import requests
 
@@ -19,24 +19,26 @@ def main(args):
             response = clova.response([welcome_message])
             return response
         elif args["request"]["type"] == "SessionEndedRequest" :
-            # 注文の確認
-            confirm_order = requests.get(args["URL"]+"/confilm?userId={}".format(userId))
-            # メッセージを送信
-            line_bot_api = LineBotApi(args["ACCESS_TOKEN"])
-            try:
-                line_bot_api.push_message(userId, TextSendMessage(text='Hello World!'))
-                thanks_text = "ありがとうございました。またのご利用をお待ちしております。"
-            except LineBotApiError as e:
-                thanks_text = "注文を完了させるには、LINEで友だち追加してくださいね。"
-            
+            thanks_text = "ありがとうございました。またのご利用をお待ちしております。"
             bye_message = cek.Message(message=thanks_text, language="ja")
             response = clova.response([bye_message])
             return response
         # intentのリクエストが来たときの判定
         elif args["request"]["type"] == "IntentRequest":
             if args["request"]["intent"]["name"] == "Clova.NoIntent":
-                rep_message = "ありがとうございました。またのご利用をお待ちしております。"
-                reply_speak = cek.Message(message=rep_message, language="ja")
+                # 注文の確認
+                confirm_order = requests.get(args["URL"]+"/confilm?userId={}".format(userId))
+                line_bot_api = LineBotApi(args["ACCESS_TOKEN"])
+                try:
+                    # メッセージを送信
+                    line_bot_api.push_message(userId, FlexSendMessage(
+                            alt_text="レシート",
+                            contents=BubbleContainer.new_from_json_dict(confirm_order.json()["orders"])
+                        ))
+                    thanks_text = "ありがとうございました。またのご利用をお待ちしております。"
+                except LineBotApiError as e:
+                    thanks_text = "注文を完了させるには、LINEで友だち追加してくださいね。"
+                reply_speak = cek.Message(message=thanks_text, language="ja")
                 response = clova.response([reply_speak], end_session=True)
                 return response
             # カスタムインテントの判定
