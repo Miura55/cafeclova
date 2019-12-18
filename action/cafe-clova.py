@@ -16,9 +16,6 @@ def main(args):
             response = clova.response([welcome_message])
             return response
         elif args["request"]["type"] == "SessionEndedRequest" :
-            # 注文の確認
-            confirm_order = requests.get(args["URL"]+"/confilm?userId={}".format(args["session"]["user"]["userId"]))
-            print(confirm_order)
             thanks_text = "ありがとうございました。またのご利用をお待ちしております。"
             bye_message = cek.Message(message=thanks_text, language="ja")
             response = clova.response([bye_message])
@@ -26,6 +23,9 @@ def main(args):
         # intentのリクエストが来たときの判定
         elif args["request"]["type"] == "IntentRequest":
             if args["request"]["intent"]["name"] == "Clova.NoIntent":
+                # 注文の確認
+                confirm_order = requests.get(args["URL"]+"/confilm?userId={}".format(args["session"]["user"]["userId"]))
+                print(confirm_order)
                 rep_message = "ありがとうございました。またのご利用をお待ちしております。"
                 reply_speak = cek.Message(message=rep_message, language="ja")
                 response = clova.response([reply_speak], end_session=True)
