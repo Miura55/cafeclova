@@ -1,4 +1,7 @@
 import cek
+from linebot import LineBotApi
+from linebot.models import TextSendMessage
+from linebot.exceptions import LineBotApiError
 import requests
 
 def main(args):
@@ -17,9 +20,15 @@ def main(args):
             return response
         elif args["request"]["type"] == "SessionEndedRequest" :
             # 注文の確認
-            confirm_order = requests.get(args["URL"]+"/confilm?userId={}".format(args["session"]["user"]["userId"]))
-            print(confirm_order)
-            thanks_text = "ありがとうございました。またのご利用をお待ちしております。"
+            confirm_order = requests.get(args["URL"]+"/confilm?userId={}".format(userId))
+            # メッセージを送信
+            line_bot_api = LineBotApi(args["ACCESS_TOKEN"])
+            try:
+                line_bot_api.push_message(userId, TextSendMessage(text='Hello World!'))
+                thanks_text = "ありがとうございました。またのご利用をお待ちしております。"
+            except LineBotApiError as e:
+                thanks_text = "注文を完了させるには、LINEで友だち追加してくださいね。"
+            
             bye_message = cek.Message(message=thanks_text, language="ja")
             response = clova.response([bye_message])
             return response
