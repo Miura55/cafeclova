@@ -55,7 +55,7 @@ def main(args):
                 call_db(args, menu, value)
                 rep_message = "{}を{}つですね。他にご注文はありますか？".format(menu, value)
             else:
-                rep_message = "かしこまりました。他にご注文はありますか？"
+                rep_message = "すいません。もう一度お願いします。"
     except Exception as e:
         print(e)
         return {"status":500}

@@ -1,0 +1,1 @@
+ibmcloud fn action update cafe-clova --docker kmiura/clova-ibmfunction cafe-clova.py
